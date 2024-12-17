@@ -31,9 +31,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         database: configService.get<string>('DATABASE_NAME'),
         synchronize: true,
         logging: true,
+        extra: {
+          encrypt: true,
+          trustServerCertificate: true,
+        },
       }),
       inject: [ConfigService],
     }),
+    
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
