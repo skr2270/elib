@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from '../users/users.entity';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           encrypt: true,
           trustServerCertificate: true,
         },
+        entities: [User],
       }),
       inject: [ConfigService],
     }),

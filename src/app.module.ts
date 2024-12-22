@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { AppResolver } from './app.resolver';
 import { DatabaseModule } from './database/database.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -16,7 +16,8 @@ import { DatabaseModule } from './database/database.service';
       },
     }),
     DatabaseModule,
+    UsersModule,
   ],
-  providers: [AppResolver],
+  providers: [],
 })
 export class AppModule {}
