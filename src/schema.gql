@@ -2,21 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Column {
-  columnName: String!
-  dataType: String!
-  isNullable: String!
-}
-
 type Query {
-  getAllTables: [String!]!
-  getSchema: String!
-  getTableColumns(tableName: String!): [Column!]!
-  getTableSchema: [Table!]!
   hello: String!
-}
-
-type Table {
-  columns: [Column!]!
-  tableName: String!
 }

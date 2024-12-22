@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DatabaseService } from './database.service';
-import { DatabaseResolver } from './database.resolver';
 
 @Module({
   imports: [
@@ -28,7 +26,7 @@ import { DatabaseResolver } from './database.resolver';
       inject: [ConfigService],
     }),
   ],
-  providers: [DatabaseService, DatabaseResolver],
-  exports: [DatabaseService],
+  providers: [],
+  exports: [],
 })
 export class DatabaseModule {}
