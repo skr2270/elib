@@ -62,7 +62,7 @@ Create a `.env` file in the root directory of the project and add the following 
 
 ```env
 DATABASE_HOST=<HOST_ADDRESS>
-DATABASE_PORT=1433
+DATABASE_PORT=<PORT_NUMBER>
 DATABASE_USERNAME=<USERNAME>
 DATABASE_PASSWORD=<PASSWORD>
 DATABASE_NAME=<DB_NAME>
@@ -126,6 +126,63 @@ Response:
 }
 ```
 ### GraphQL Query Patterns
+**Get All Countries**:
+```graphql
+query {
+  getCountries {
+    CountryId
+    CountryName
+  }
+}
+```
+***Example Respone***:
+```
+{
+  "data": {
+    "getCountries": [
+      {
+        "CountryId": 1,
+        "CountryName": "USA"
+      },
+      {
+        "CountryId": 2,
+        "CountryName": "UK"
+      },
+      {
+        "CountryId": 3,
+        "CountryName": "IND"
+      }
+    ]
+  }
+}
+```
+**Get states of specific country**
+```
+query {
+  getStates(countryId: 3) {
+    StateId
+    StateName
+  }
+}
+```
+***Example Response***:
+```
+{
+  "data": {
+    "getStates": [
+      {
+        "StateId": 3,
+        "StateName": "Telangana"
+      },
+      {
+        "StateId": 4,
+        "StateName": "Kerala"
+      }
+    ]
+  }
+}
+```
+
 **Create User**: This mutation creates a new user with the provided details:
 ```
 mutation {
