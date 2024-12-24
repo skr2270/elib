@@ -39,10 +39,14 @@ jobs:
         script: |
           echo "Cloning or pulling the latest code from GitHub repository..."
           if [ -d "elib" ]; then
-            cd elib && git pull origin backend
+              cd elib && git checkout backend && git pull origin backend
           else
             git clone https://github.com/skr2270/elib.git
           fi
+
+          # List the directory structure to debug if the 'backend' folder exists
+          echo "Listing directory structure..."
+          ls -R elib
 
           # Navigate to the backend directory where docker-compose.yml is located
           cd elib/backend
