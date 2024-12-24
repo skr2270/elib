@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from '../users/users.entity';
+import { Country } from 'src/lookup/entities/country.entity';
+import { State } from 'src/lookup/entities/state.entity';
+import { SchoolDistrict } from 'src/lookup/entities/district.entity';
 
 @Module({
   imports: [
@@ -24,7 +27,7 @@ import { User } from '../users/users.entity';
           encrypt: true,
           trustServerCertificate: true,
         },
-        entities: [User],
+        entities: [User, Country, State, SchoolDistrict],
       }),
       inject: [ConfigService],
     }),

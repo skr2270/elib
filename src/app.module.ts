@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { DatabaseModule } from './database/database.service';
+import { LookupModule } from './lookup/lookup.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
       },
     }),
     DatabaseModule,
+    LookupModule,
     UsersModule,
   ],
   providers: [],

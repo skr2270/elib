@@ -19,7 +19,31 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Country {
+  Id: Int!
+  CountryId: Int!
+  CountryName: String!
+}
+
+type CountryDto {
+  CountryId: Int!
+  CountryName: String!
+}
+
+type StateDto {
+  StateId: Int!
+  StateName: String!
+}
+
+type SchoolDistrictDto {
+  SchoolDistrictId: Int!
+  SchoolDistrictName: String!
+}
+
 type Query {
+  getCountries: [CountryDto!]!
+  getStates(countryId: Float!): [StateDto!]!
+  getSchoolDistricts: [SchoolDistrictDto!]!
   getAllUsers: [User!]!
   getUserById(userId: Float!): User!
 }
