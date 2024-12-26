@@ -43,6 +43,9 @@ jobs:
           else
             git clone https://github.com/skr2270/elib.git
           fi
+          
+          # Checkout a specific commit if needed
+          # git checkout <commit_hash>  # Uncomment if you want to deploy a specific commit
 
           # List the directory structure to debug if the 'backend' folder exists
           echo "Listing directory structure..."
@@ -60,7 +63,8 @@ jobs:
           fi
 
           echo "Building Docker images using Docker Compose..."
-          docker-compose build  # Rebuild the image with the latest code
+          docker-compose build --no-cache # Rebuild the image with the latest code
 
           echo "Restarting containers using Docker Compose..."
+          docker-compose down -v  # Stop containers and remove volumes
           docker-compose up -d  # Run the containers in detached mode
