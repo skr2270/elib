@@ -8,8 +8,11 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [User])
-  async getAllUsers(): Promise<User[]> {
-    return this.usersService.getAllUsers();
+  async getAllUsers(
+    @Args('page', { type: () => Number, defaultValue: 1 }) page: number,
+    @Args('limit', { type: () => Number, defaultValue: 10 }) limit: number,
+  ): Promise<User[]> {
+    return this.usersService.getAllUsers(page, limit);
   }
 
   @Query(() => User)

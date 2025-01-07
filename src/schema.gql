@@ -44,7 +44,7 @@ type Query {
   getCountries: [CountryDto!]!
   getStates(countryId: Float!): [StateDto!]!
   getSchoolDistricts: [SchoolDistrictDto!]!
-  getAllUsers: [User!]!
+  getAllUsers(page: Float! = 1, limit: Float! = 10): [User!]!
   getUserById(userId: Float!): User!
 }
 
