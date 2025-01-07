@@ -2,7 +2,7 @@ import { Injectable, ConflictException, NotFoundException, UnauthorizedException
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
-import { CreateUserDto, UpdateUserDto } from './users.dto';
+import { CreateUserDto, UpdateUserDto, LoginResponseDto } from './users.dto';
 import * as bcrypt from 'bcryptjs';
 import { AuthService } from '../auth/auth.service';
 
@@ -69,18 +69,15 @@ export class UsersService {
     await this.usersRepository.delete(userId);
   }
 
-  async login(email: string, password: string): Promise<{ access_token: string }> {
+  async login(email: string, password: string): Promise<LoginResponseDto> {
     const user = await this.usersRepository.findOne({ where: { Email: email } });
-
     if (!user) {
       throw new NotFoundException('User not found');
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.Password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
-
     const access_token = await this.authService.generateToken(user.UserId, user.Email);
     return { access_token };
   }

@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateUserDto {
@@ -37,4 +37,10 @@ export class UpdateUserDto {
 
   @Field({ nullable: true })
   IsActive?: boolean;
+}
+
+@ObjectType()
+export class LoginResponseDto {
+  @Field()
+  access_token: string;
 }

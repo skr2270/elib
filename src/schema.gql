@@ -40,6 +40,10 @@ type SchoolDistrictDto {
   SchoolDistrictName: String!
 }
 
+type LoginResponseDto {
+  access_token: String!
+}
+
 type Query {
   getCountries: [CountryDto!]!
   getStates(countryId: Float!): [StateDto!]!
@@ -53,7 +57,7 @@ type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
   updateUser(userId: Float!, updateUserDto: UpdateUserDto!): User!
   deleteUser(userId: Float!): Boolean!
-  login(email: String!, password: String!): String!
+  login(email: String!, password: String!): LoginResponseDto!
 }
 
 input CreateUserDto {
