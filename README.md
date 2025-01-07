@@ -66,6 +66,7 @@ DATABASE_PORT=<PORT_NUMBER>
 DATABASE_USERNAME=<USERNAME>
 DATABASE_PASSWORD=<PASSWORD>
 DATABASE_NAME=<DB_NAME>
+JWT_SECRET=<your-secret-jwt-key>
 AWS_S3_BUCKET_NAME=your-s3-bucket-name
 AWS_ACCESS_KEY_ID=your-access-key-id
 AWS_SECRET_ACCESS_KEY=your-secret-access-key
@@ -108,23 +109,7 @@ TypeOrmModule.forRoot({
 Once the application is running, you can test the GraphQL API using the **GraphQL Playground**.
 
 - Open your browser and visit: (http://localhost:3000/graphql)
-- You can use this query to test if everything is working:
 
-```graphql
-query {
-  hello
-}
-```
-
-Response:
-
-```json
-{
-  "data": {
-    "hello": "Hello, GraphQL!"
-  }
-}
-```
 ### GraphQL Query Patterns
 **Get All Countries**:
 ```graphql
@@ -327,6 +312,24 @@ mutation {
 }
 ```
 
+**Login**: This mutation logs in a user with the specified Email and Password:
+```
+mutation {
+  login(email: "saikumar@duck.com", password: "newpassword123") {
+    access_token
+  }
+}
+```
+***Example Response***
+```
+{
+  "data": {
+    "login": {
+      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoic2Fpa3VtYXJAZHVjay5jb20iLCJpYXQiOjE3MzYyMzIxMjcsImV4cCI6MTczNjIzNTcyN30.1HuS63WOmuo__V3e3BvKOx0uvb-OBh0rwZmLiWxbn1I"
+    }
+  }
+}
+```
 
 ## API Documentation
 
