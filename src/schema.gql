@@ -46,12 +46,14 @@ type Query {
   getSchoolDistricts: [SchoolDistrictDto!]!
   getAllUsers(page: Float! = 1, limit: Float! = 10): [User!]!
   getUserById(userId: Float!): User!
+  getMe(userId: Float!): User!
 }
 
 type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
   updateUser(userId: Float!, updateUserDto: UpdateUserDto!): User!
   deleteUser(userId: Float!): Boolean!
+  login(email: String!, password: String!): String!
 }
 
 input CreateUserDto {

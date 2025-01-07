@@ -1,15 +1,17 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto, UpdateUserDto } from './users.dto';
 import * as bcrypt from 'bcryptjs';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly authService: AuthService,
   ) { }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -50,9 +52,11 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
+
     if (updateUserDto.Password) {
       updateUserDto.Password = await bcrypt.hash(updateUserDto.Password, 10);
     }
+
     await this.usersRepository.update(userId, updateUserDto);
     return this.usersRepository.findOne({ where: { UserId: userId } });
   }
@@ -63,5 +67,21 @@ export class UsersService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
     await this.usersRepository.delete(userId);
+  }
+
+  async login(email: string, password: string): Promise<{ access_token: string }> {
+    const user = await this.usersRepository.findOne({ where: { Email: email } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.Password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid password');
+    }
+
+    const access_token = await this.authService.generateToken(user.UserId, user.Email);
+    return { access_token };
   }
 }

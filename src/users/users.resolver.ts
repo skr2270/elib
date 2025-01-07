@@ -2,10 +2,16 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { CreateUserDto, UpdateUserDto } from './users.dto';
+import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) { }
 
   @Query(() => [User])
   async getAllUsers(
@@ -39,5 +45,19 @@ export class UsersResolver {
   async deleteUser(@Args('userId') userId: number): Promise<boolean> {
     await this.usersService.deleteUser(userId);
     return true;
+  }
+
+  @Mutation(() => String)
+  async login(
+    @Args('email') email: string,
+    @Args('password') password: string,
+  ): Promise<{ access_token: string }> {
+    return this.usersService.login(email, password);
+  }
+
+  @Query(() => User)
+  @UseGuards(JwtAuthGuard)
+  async getMe(@Args('userId') userId: number): Promise<User> {
+    return this.usersService.getUserById(userId);
   }
 }
